@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         {
             id: "worldcoin",
@@ -8,8 +9,8 @@ export const authOptions: NextAuthOptions = {
             type: "oauth",
             wellKnown: "https://id.worldcoin.org/.well-known/openid-configuration",
             authorization: { params: { scope: "openid" } },
-            clientId: "app_staging_10835abc2ab6e1e0fdc2831476848fb9",
-            clientSecret: "sk_e2f2c99aafdb3534d3bbccca063796860ef7fa9f96866ff8",
+            clientId: process.env.NEXT_PUBLIC_WLD_CLIENT_ID,
+            clientSecret: process.env.NEXT_PUBLIC_WLD_CLIENT_SECRET,
             idToken: true,
             checks: ["state", "nonce", "pkce"],
             profile(profile) {
@@ -28,5 +29,5 @@ export const authOptions: NextAuthOptions = {
             return token;
         },
     },
-   
+
 };

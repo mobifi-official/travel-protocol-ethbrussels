@@ -4,13 +4,9 @@ import { GeneratedProofResponse } from "@/src/app/models/zk-proof-models";
 import { generateZKProof } from "@/src/lib/zkProof";
 import { Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function HotelBookerComponent() {
-
-    const router = useRouter();
-
 
     const [worldCoinId, setWorldCoinId] = useState<string>();
     const [bookingId, setBookingId] = useState<string>();
@@ -58,12 +54,13 @@ export default function HotelBookerComponent() {
 
 
     const { data: session, status } = useSession();
+
     return (
         <div className="flex flex-col items-center justify-start">
             <p>Make Booking</p>
             {(bookingId && worldCoinId && dateTimeBookingMade) &&
                 <div className="flex flex-col items-center justify-start gap-[12px]">
-                    <div className="flex flex-col p-4 items-start justify-start rounded-[12px]">
+                    <div className="flex flex-col p-4 items-start justify-start rounded-[12px] bg-white text-black">
                         <p>Booking at ETH Brussels 2024 Hotel</p>
                         <div className="h-[20px]"></div>
                         <p>1 Room x 2 Nights</p>
@@ -77,6 +74,8 @@ export default function HotelBookerComponent() {
                             e.stopPropagation();
                             try {
                                 const response = await generateZKProof(worldCoinId, bookingId, dateTimeBookingMade);
+
+                                console.log(`--->GENERATED-PROOF<0----`, response);
                                 setProofDetails(response);
                             } catch (error) {
                                 setProofDetails(null);

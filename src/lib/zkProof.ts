@@ -58,6 +58,8 @@ export async function generateZKProof(worldcoinId: string, bookingId: string, bo
             throw new Error("Invalid proof");
         }
 
+        
+
         return { proof, publicSignals };
     } catch (error) {
         console.error("Error generating or verifying proof:", error);
