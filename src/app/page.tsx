@@ -7,8 +7,10 @@ import { GeneratedProofResponse } from "./models/zk-proof-models";
 import WorldcoinSignIn from "./components/WorldCoinSignIn";
 import { useAccount } from "wagmi";
 import { useSession, signIn, signOut } from "next-auth/react"
-import { Button } from "@nextui-org/react";
+import { Button, Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
+import HotelBookerComponent from "./components/users/hotel_booker/HotelBookerComponent";
+import HotelBookingVerifierComponent from "./components/users/hotel-booking-verifier/HotelBookingVerifierComponent";
 export default function Home() {
 
   const { address } = useAccount();
@@ -67,28 +69,29 @@ export default function Home() {
 
     return (
       <main className="flex min-h-screen flex-col items-center justify-start p-24">
-
         <p>Travel Protocol</p>
-        <p>{`Signed in as ${session.user?.email}`}</p>
         {/* <WorldcoinSignIn /> */}
-        <div className="flex flex-col items-center justify-start">
-          <p>Make Booking</p>
-          {(bookingId && worldCoinId && dateTimeBookingMade) && <Button
-            className="bg-green-600 text-white"
-            onClick={async (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              try {
-                const response = await generateZKProof(worldCoinId, bookingId, dateTimeBookingMade);
-                setProofDetails(response);
-              } catch (error) {
-                setProofDetails(null);
-              }
 
-            }}>Generate Proof
-          </Button>
-          }
-          {(proofDetails) && <div>Successfully Generated Your Booking Proof</div>}
+        <div className="w-full">
+          <Tabs
+            fullWidth
+            variant={'light'}
+            aria-label="Tabs variants"
+            radius="full">
+            <Tab
+              className="hotelDetailsPageTabText"
+              key="user"
+              title="User">
+              <HotelBookerComponent />
+            </Tab>
+            <Tab
+              className="hotelDetailsPageTabText"
+              key="hotel"
+              title="Hotel">
+              <HotelBookingVerifierComponent />
+            </Tab>
+
+          </Tabs>
         </div>
       </main>
     );
