@@ -9,9 +9,6 @@ import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/re
 import { DialogCloseIcon } from "../../shared/custom-icons";
 
 
-
-
-
 export default function HotelBookingVerifierComponent() {
 
     const { bookingProofData } = useHotelBookingWithProof();
@@ -74,7 +71,7 @@ export default function HotelBookingVerifierComponent() {
                         </svg>
                         <span className="sr-only">Loading...</span>
                     </div>
-                    <p className="text-green-700 text-center">Verification is in progress</p>
+                    <p className="text-green-700 text-center">Verifying your booking proof...</p>
                 </div>
             );
         } else if (!verificationIsInProgress && verifiedProof && bookingIsValid) {
