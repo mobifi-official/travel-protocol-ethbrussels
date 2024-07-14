@@ -27,6 +27,10 @@ export default function HotelBookingVerifierComponent() {
         setHasVerifiedIdentity(true);
         setVerifiedProof(proof);
 
+        if (bookingProofData) {
+            await verifyZkProofSC(bookingProofData);
+        }
+
     };
 
     const onError = (errorState: IErrorState) => {
@@ -56,20 +60,6 @@ export default function HotelBookingVerifierComponent() {
 
 
             </IDKitWidget>}
-            {(bookingProofData && hasVerifiedIdentity) &&
-                <Button
-                    type='button'
-                    className="rounded-[12px] bg-green-700 text-white p-4 h-[48px]"
-                    onClick={async (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                       await verifyZkProofSC(bookingProofData);
-
-                    }}>
-                    Verify Booking
-                </Button>
-            }
         </div>
     );
 }
