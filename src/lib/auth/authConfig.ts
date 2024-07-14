@@ -16,9 +16,11 @@ export const authOptions: NextAuthOptions = {
             profile(profile) {
                 return {
                     id: profile.sub,
-                    name: profile.sub,
-                    verificationLevel:
-                        profile["https://id.worldcoin.org/v1"].verification_level,
+                    email: profile.email,
+                    name: profile.name || profile.sub,
+                    givenName: profile.given_name,
+                    familyName: profile.family_name,
+                    verificationLevel: profile["https://id.worldcoin.org/v1"].verification_level,
                 };
             },
         },
@@ -29,5 +31,4 @@ export const authOptions: NextAuthOptions = {
             return token;
         },
     },
-
 };

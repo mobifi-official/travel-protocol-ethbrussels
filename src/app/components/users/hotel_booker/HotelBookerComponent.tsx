@@ -1,6 +1,7 @@
 'use client';
 
 import { GeneratedProofResponse } from "@/src/app/models/zk-proof-models";
+import { useHotelBookingWithProof } from "@/src/app/utils/hooks/useHotelBookingWithProof";
 import { generateZKProof } from "@/src/lib/zkProof";
 import { Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
@@ -54,10 +55,12 @@ export default function HotelBookerComponent() {
 
 
     const { data: session, status } = useSession();
+    const { bookingProofData, setBookingProofData } = useHotelBookingWithProof();
 
     return (
-        <div className="flex flex-col items-center justify-start">
-            <p>Make Booking</p>
+        <div className="flex flex-col items-center justify-center gap-[12px]">
+            <p className="text-white">Make Booking Today!</p>
+
             {(bookingId && worldCoinId && dateTimeBookingMade) &&
                 <div className="flex flex-col items-center justify-start gap-[12px]">
                     <div className="flex flex-col p-4 items-start justify-start rounded-[12px] bg-white text-black">
@@ -68,15 +71,16 @@ export default function HotelBookerComponent() {
                         <p>EUR 129.43</p>
                     </div>
                     <Button
-                        className="bg-green-600 text-white"
+                        className="bg-green-600 text-white p-4 h-[48px] rounded-[12px]"
                         onClick={async (e) => {
                             e.preventDefault();
                             e.stopPropagation();
                             try {
                                 const response = await generateZKProof(worldCoinId, bookingId, dateTimeBookingMade);
 
-                                console.log(`--->GENERATED-PROOF<0----`, response);
+
                                 setProofDetails(response);
+                                setBookingProofData?.(response);
                             } catch (error) {
                                 setProofDetails(null);
                             }

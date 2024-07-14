@@ -1,4 +1,4 @@
-export const GROTH_PROOF_VERIFIER = [
+export const GROTH_PROOF_VERIFIER_ABI = [
     {
         "inputs": [
             {

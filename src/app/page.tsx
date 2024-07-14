@@ -1,19 +1,13 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { generateZKProof, verifyProof } from "../lib/zkProof";
-import axios from "axios";
 import { GeneratedProofResponse } from "./models/zk-proof-models";
-import WorldcoinSignIn from "./components/WorldCoinSignIn";
-import { useAccount } from "wagmi";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { Button, Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import HotelBookerComponent from "./components/users/hotel_booker/HotelBookerComponent";
 import HotelBookingVerifierComponent from "./components/users/hotel-booking-verifier/HotelBookingVerifierComponent";
 export default function Home() {
-
-  const { address } = useAccount();
 
   const router = useRouter();
 
@@ -68,14 +62,16 @@ export default function Home() {
   if (status === "authenticated") {
 
     return (
-      <main className="flex min-h-screen flex-col items-center justify-start p-24">
-        <p>Travel Protocol</p>
+      <main className="flex min-h-screen flex-col items-center justify-center p-24 w-full">
+        <h1 className="appNameTitle text-white font-bold">Travel Protocol</h1>
+        <div className="h-[20px]"></div>
         {/* <WorldcoinSignIn /> */}
 
-        <div className="w-full">
+        <div className="flex flex-col justify-center items-center w-[400px] gap-[12px]">
           <Tabs
             fullWidth
-            variant={'light'}
+            color="primary"
+            variant={'bordered'}
             aria-label="Tabs variants"
             radius="full">
             <Tab
@@ -98,15 +94,18 @@ export default function Home() {
   }
 
   return (
-    <Button
-      className="bg-green rounded-[12px]"
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        router.push("/api/auth/signin");
-      }}
-    >
-      Sign In With Your World ID
-    </Button>
+    <div className="flex flex-col items-center justify-center gap-[12px] min-h-screen">
+      <h6 className="text-white font-bold">Sign In To Travel Protocol</h6>
+      <Button
+        className="rounded-[12px] bg-green-600 text-white p-4 h-[48px]"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          router.push("/api/auth/signin");
+        }}
+      >
+        Sign In With Your World ID
+      </Button>
+    </div>
   );
 }

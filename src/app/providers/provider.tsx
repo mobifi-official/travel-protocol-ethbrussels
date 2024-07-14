@@ -8,6 +8,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { config } from "@/src/config/wagmi-config/config";
 import { SessionProvider } from "next-auth/react";
+import HotelBookingWithGeneratedProofContextProvider from "./hotel/booking/HotelBookingWithGeneratedProofProvider";
 
 
 // Initializing a new query client for react-query
@@ -22,7 +23,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
-          <NextUIProvider>{mounted && children}</NextUIProvider>
+          <HotelBookingWithGeneratedProofContextProvider>
+            <NextUIProvider>{mounted && children}</NextUIProvider>
+          </HotelBookingWithGeneratedProofContextProvider>
         </SessionProvider>
       </QueryClientProvider>
     </WagmiProvider>

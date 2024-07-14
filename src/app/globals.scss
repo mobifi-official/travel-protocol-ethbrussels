@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+@mixin labelL_mixin {
+  font-family: "Roboto";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  /* 150% */
+  letter-spacing: 0.1px;
+}
+
+@mixin label_M_Mixin {
+  //styleName: Label M;
+  font-family: "Roboto";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+}
+
+@mixin titleS_mixin {
+  font-family: "Roboto";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  /* 142.857% */
+  letter-spacing: 0.1px;
+}
+
+@mixin title1_mixin {
+  font-family: "Futura";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 44px;
+}
+
+@mixin title2_mixin {
+  font-family: "Futura";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+@mixin title3_mixin {
+  font-family: "Futura";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.024px;
+}
+
+@mixin title_4_mixin {
+  text-align: center;
+  font-family: "Futura";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.1px;
+}
+
+@mixin subtitle3_mixin {
+  font-family: "Roboto";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+}
+
+@mixin subtitle2_mixin {
+  font-family: "Roboto";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+}
+
+@mixin headline1_mixin {
+  font-family: "Futura";
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 78px;
+  /* 133.333% */
+  text-transform: capitalize;
+}
+
+@mixin headline3_mixin {
+  font-family: "Futura";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 48px;
+  /* 133.333% */
+  text-transform: capitalize;
+}
+
+@mixin body_s_mixin {
+  //styleName: Body S;
+  font-family: "Roboto";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.4000000059604645px;
+  text-align: left;
+
+}
+
+@mixin body1_mixin {
+  /* Body 1 */
+  font-family: "Roboto";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  /* 133.333% */
+}
+
+@mixin body2_mixin {
+  /* Body 2 */
+  font-family: "Roboto";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  /* 150% */
+  letter-spacing: 0.15px;
+
+  @apply font-[400] text-[16px] leading-[24px] tracking-[0.15px];
+}
+
+@mixin body3_mixin {
+  // color: #4D4D4D;
+  /* Body 3 */
+  font-family: "Roboto";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  /* 142.857% */
+  letter-spacing: 0.25px;
+}
+
+@mixin body4_mixin {
+  font-family: "Roboto";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  /* 133.333% */
+  letter-spacing: 0.4px;
+}
+
+@mixin bodyM_Mixin {
+  font-family: "Roboto";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  /* 142.857% */
+  letter-spacing: 0.25px;
+}
+
+@mixin titleM_mixin {
+  /* Title M */
+  font-family: "Futura";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  /* 150% */
+  letter-spacing: 0.024px;
+}
+
+.hotelDetailsPageTabText {
+  @include title3_mixin();
+  @apply text-grey2 min-h-[48px];
+}
+
+
+.appNameTitle {
+  @include title2_mixin();
+}
