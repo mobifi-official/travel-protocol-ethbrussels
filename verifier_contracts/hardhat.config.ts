@@ -10,18 +10,18 @@ const config: HardhatUserConfig = {
     },
   },
   
-  etherscan: {
-    customChains: [
-      {
-        network: "polygonZkEVMCardona",
-        chainId: 1442,  // Note: Chain ID for testnet is 1442, not 2442
-        urls: {
-          apiURL: "https://api-testnet-zkevm.polygonscan.com/api",
-          browserURL: "https://testnet-zkevm.polygonscan.com",
-        },
-      },
-    ],
-  },
+  // etherscan: {
+  //   customChains: [
+  //     {
+  //       network: "polygonZkEVMCardona",
+  //       chainId: 1442,  // Note: Chain ID for testnet is 1442, not 2442
+  //       urls: {
+  //         apiURL: "https://api-testnet-zkevm.polygonscan.com/api",
+  //         browserURL: "https://testnet-zkevm.polygonscan.com",
+  //       },
+  //     },
+  //   ],
+  // },
 };
 
 export default config;
