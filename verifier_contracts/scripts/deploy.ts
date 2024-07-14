@@ -1,24 +1,26 @@
-import { ethers } from "hardhat";
+require('dotenv').config();
+const { ethers } = require("hardhat");
 
 async function main() {
-  try {
-    // Get the ContractFactory of your Groth16Verifier
-    const Groth16Verifier = await ethers.getContractFactory("Groth16Verifier");
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with the account:", deployer.address);
 
-    // Deploy the contract
-    const contract = await Groth16Verifier.deploy();
+  // Deploy the Groth16Verifier contract
+  const Verifier = await ethers.getContractFactory("Groth16Verifier");
+  const verifier = await Verifier.deploy();
+  await verifier.deployed();
+  console.log("Groth16Verifier deployed to:", verifier.address);
 
-    // Wait for the deployment transaction to be mined
-    await contract.waitForDeployment();
-
-    console.log(`Groth16Verifier deployed to: ${await contract.getAddress()}`);
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
+  // Deploy the TravelProtocol contract with the verifier address
+  const TravelProtocol = await ethers.getContractFactory("TravelProtocol");
+  const travelProtocol = await TravelProtocol.deploy(verifier.address);
+  await travelProtocol.deployed();
+  console.log("TravelProtocol deployed to:", travelProtocol.address);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
