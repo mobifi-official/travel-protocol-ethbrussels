@@ -88,19 +88,20 @@ export async function verifyProof(proofDetails: GeneratedProofResponse): Promise
         console.log(`Verification completed in ${endVerificationTime - startVerificationTime} ms`);
 
         if (isValid) {
-            console.log(`-->[proof-appears-valid]<---`);
+
             return { status: 'success', message: 'Proof verified successfully' };
         } else {
-            console.log(`-->[proof-is-not-valid]<---`);
+
             return { status: 'error', message: 'Invalid proof' };
         }
     } catch (error) {
-        console.error("Error verifying proof:", error);
+
         return { status: 'error', message: 'Error verifying proof' };
     }
 }
 
 import { BigNumberish } from "ethers";
+import { showCustomToast, ToastMessageType } from '../app/components/toasts/custom-toast';
 
 export async function verifyZkProofSC(verificationData: GeneratedProofResponse) {
     // 1. Set up the provider (connect to the network)
@@ -140,6 +141,12 @@ export async function verifyZkProofSC(verificationData: GeneratedProofResponse) 
         const formattedPublicSignals: BigNumberish[] = publicSignals.map(signal => BigInt(signal));
 
         const isValid = await contract.verifyProof(pA, pB, pC, formattedPublicSignals);
+
+        if (isValid) {
+            showCustomToast({ message: "Booking Has Been Successfully Verified!", typeOfToast: ToastMessageType.success });
+        } else {
+            showCustomToast({ message: "Booking verificatiion failed", typeOfToast: ToastMessageType.error });
+        }
 
         console.log(`---->[tx-result]<----`, isValid);
 

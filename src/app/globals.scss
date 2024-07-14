@@ -221,3 +221,13 @@ body {
 .appNameTitle {
   @include title2_mixin();
 }
+
+.customToastMessageText {
+  @media screen and (max-width: 767px) {
+    @include bodyM_Mixin();
+  }
+
+  @media screen and (min-width: 768px) {
+    @include body1_mixin();
+  }
+}

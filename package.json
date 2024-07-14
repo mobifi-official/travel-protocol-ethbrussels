@@ -25,6 +25,7 @@
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "sass": "^1.77.8",
     "snarkjs": "^0.7.4",
     "viem": "^2.17.3",
