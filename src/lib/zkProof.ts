@@ -2,6 +2,10 @@ import * as snarkjs from 'snarkjs';
 import { GeneratedProofResponse } from '../app/models/zk-proof-models';
 import { ethers, JsonRpcProvider } from "ethers";
 import { GROTH_PROOF_VERIFIER_ABI } from '../app/utils/sc_abis';
+import { BigNumberish } from "ethers";
+
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 function hashToNumber(input: string): bigint {
     let arr = input.split('');
@@ -71,21 +75,15 @@ export async function verifyProof(proofDetails: GeneratedProofResponse): Promise
     const { proof, publicSignals } = proofDetails;
 
     try {
-        const startReadFileTime = performance.now();
+      
         const verificationKeyResponse = await fetch('/circuits/verification_key.json');
         if (!verificationKeyResponse.ok) {
             throw new Error('Failed to load verification key');
         }
 
         const verificationKey = await verificationKeyResponse.json();
-        const endReadFileTime = performance.now();
-        console.log(`Read verification key file in ${endReadFileTime - startReadFileTime} ms`);
 
-        console.log(`Verification starting...`);
-        const startVerificationTime = performance.now();
         const isValid = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
-        const endVerificationTime = performance.now();
-        console.log(`Verification completed in ${endVerificationTime - startVerificationTime} ms`);
 
         if (isValid) {
 
@@ -100,15 +98,16 @@ export async function verifyProof(proofDetails: GeneratedProofResponse): Promise
     }
 }
 
-import { BigNumberish } from "ethers";
-import { showCustomToast, ToastMessageType } from '../app/components/toasts/custom-toast';
 
-export async function verifyZkProofSC(verificationData: GeneratedProofResponse) {
+
+
+export async function verifyZkProofSC(verificationData: GeneratedProofResponse): Promise<boolean> {
     // 1. Set up the provider (connect to the network)
     const provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_ALCHEMY_RPC_URL);
 
     // 2. Create a wallet instance
     const privateKey = process.env.NEXT_PUBLIC_WALLET_PRIVATE_KEY as `0x${string}`;
+    
     const wallet = new ethers.Wallet(privateKey, provider);
 
     // 3. Contract details
@@ -142,13 +141,9 @@ export async function verifyZkProofSC(verificationData: GeneratedProofResponse) 
 
         const isValid = await contract.verifyProof(pA, pB, pC, formattedPublicSignals);
 
-        if (isValid) {
-            showCustomToast({ message: "Booking Has Been Successfully Verified!", typeOfToast: ToastMessageType.success });
-        } else {
-            showCustomToast({ message: "Booking verificatiion failed", typeOfToast: ToastMessageType.error });
-        }
+        await delay(3000);
 
-        console.log(`---->[tx-result]<----`, isValid);
+       return isValid;
 
     } catch (error) {
         console.error('Error in verifyZkProofSC:', error);

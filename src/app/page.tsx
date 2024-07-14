@@ -67,7 +67,7 @@ export default function Home() {
         <div className="h-[20px]"></div>
         {/* <WorldcoinSignIn /> */}
 
-        <div className="flex flex-col justify-center items-center w-[400px] gap-[12px]">
+        <div className="flex flex-col justify-center items-center w-[700px] gap-[12px]">
           <Tabs
             fullWidth
             color="primary"
@@ -94,17 +94,25 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-[12px] min-h-screen">
-      <h6 className="text-white font-bold">Sign In To Travel Protocol</h6>
+    <div className="flex flex-col items-center justify-center gap-[12px] min-h-screen ">
+      <div className="bg-white/30 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto w-full">
+        <h1 className="pt-4 pb-8 bg-gradient-to-br from-black via-[#171717] to-[#575757] bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
+          Travel Potocol
+        </h1>
+        <div className="flex flex-col rounded-[12px] border-[1px] border-black gap-[20px]">
+          <p className="text-text-black font-normal text-center">Powered by<span className="text-black font-bold">{` World ID `}</span> and <span className="text-black font-bold">{` Polygon ZKP`}</span></p>
+          <p className="text-black font-normal text-center">We book the hotel for you without collecting your private data</p>
+        </div>
+      </div>
       <Button
-        className="rounded-[12px] bg-green-600 text-white p-4 h-[48px]"
+        className="rounded-full bg-green-600 text-white p-4 h-[48px] min-w-[200px] font-bold"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           router.push("/api/auth/signin");
         }}
       >
-        Sign In With Your World ID
+        Sign In
       </Button>
     </div>
   );
