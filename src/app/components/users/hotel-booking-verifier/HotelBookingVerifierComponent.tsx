@@ -4,7 +4,7 @@ import { useHotelBookingWithProof } from "@/src/app/utils/hooks/useHotelBookingW
 import { verifyZkProofSC } from "@/src/lib/zkProof";
 import { Button } from "@nextui-org/react";
 import { IDKitWidget, IErrorState, ISuccessResult, VerificationLevel } from "@worldcoin/idkit";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
 import { DialogCloseIcon } from "../../shared/custom-icons";
 
@@ -39,7 +39,15 @@ export default function HotelBookingVerifierComponent() {
     }, [bookingProofData]);
 
 
-    const onSuccess = async (proof: ISuccessResult) => {
+    const onError = (errorState: IErrorState) => {
+        console.log(`Errored signing in with world coin ID`, errorState);
+        setHasVerifiedIdentity(false);
+        setVerifiedProof(undefined);
+        setVerificationIsInProgress(false);
+    }
+
+
+    const onSuccess = useCallback(async (proof: ISuccessResult) => {
         setHasVerifiedIdentity(true);
         setVerifiedProof(proof);
         setVerificationIsInProgress(true);
@@ -52,17 +60,9 @@ export default function HotelBookingVerifierComponent() {
         } finally {
             setVerificationIsInProgress(false);
         }
-    };
+    }, [bookingProofData]);
     
-
-    const onError = (errorState: IErrorState) => {
-        console.log(`Errored signing in with world coin ID`, errorState);
-        setHasVerifiedIdentity(false);
-        setVerifiedProof(undefined);
-        setVerificationIsInProgress(false);
-    }
-
-
+    
     const child = useMemo(() => {
         if (verificationIsInProgress) {
             return (
@@ -102,7 +102,7 @@ export default function HotelBookingVerifierComponent() {
                 </div>
                 {child}
                 {/* <p>Hotel Bookings Made</p> */}
-                {(bookingProofData && !hasVerifiedIdentity) && <div className="flex flex-col items-center justify-center gap-[12px]">
+                {(bookingProofData && !hasVerifiedIdentity ) && <div className="flex flex-col items-center justify-center gap-[12px]">
                     <p className="text-black font-normal text-center">Ask your guest to verify their world ID:</p>
                     <IDKitWidget
                         app_id={process.env.NEXT_PUBLIC_WLD_CLIENT_ID as `app_${string}`}
@@ -110,7 +110,7 @@ export default function HotelBookingVerifierComponent() {
                         signal={`verify_your_uniqueness`}
                         onSuccess={onSuccess}
                         onError={onError}
-                        handleVerify={onSuccess}
+                        
                         verification_level={VerificationLevel.Device}
                     >
                         {({ open }) => <Button
